@@ -7,11 +7,11 @@ package modelo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Medicina {
     private String nombre;
-    private Integer unidad;
+    private Integer unidades;
     private String pauta;
     private Receta receta;
 
@@ -23,12 +23,12 @@ public class Medicina {
         this.nombre = nombre;
     }
 
-    public Integer getUnidad() {
-        return unidad;
+    public Integer getUnidades() {
+        return unidades;
     }
 
-    public void setUnidad(Integer unidad) {
-        this.unidad = unidad;
+    public void setUnidades(Integer unidades) {
+        this.unidades = unidades;
     }
 
     public String getPauta() {

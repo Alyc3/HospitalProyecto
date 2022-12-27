@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package modelo.enums;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
-public enum TipoSanguineo {
-    A,O,B,AB,AN,ON,BN,ABN; 
+public enum EstadoReceta {
+    Entregado, Pendiente, Agotado;
 }

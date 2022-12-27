@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Cuenta extends Persona {
     private int id;

@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Persona {
     private int id;
@@ -16,7 +16,6 @@ public class Persona {
     private String apellido;
     private String direccion;
     private Integer edad;
-    private String genero;
     private String correo;
     private String telefono;
     private Rol rol;
@@ -67,14 +66,6 @@ public class Persona {
 
     public void setEdad(Integer edad) {
         this.edad = edad;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
     }
 
     public String getCorreo() {

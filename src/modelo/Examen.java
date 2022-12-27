@@ -5,9 +5,11 @@
  */
 package modelo;
 
+import modelo.enums.TipoExamen;
+
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Examen {
     private TipoExamen tipoExamen;

@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Medico extends Persona {
     private int id;

@@ -5,9 +5,11 @@
  */
 package modelo;
 
+import modelo.enums.EstadoReceta;
+
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Receta {
     private EstadoReceta estado;

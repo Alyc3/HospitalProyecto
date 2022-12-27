@@ -7,10 +7,11 @@ package modelo;
 
 import java.sql.Time;
 import java.util.Date;
+import modelo.enums.EstadoTurno;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class ConsultaMedica {
     private int id;

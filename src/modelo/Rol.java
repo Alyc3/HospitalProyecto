@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class Rol {
     private int id;

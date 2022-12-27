@@ -6,10 +6,11 @@
 package modelo;
 
 import java.util.Date;
+import modelo.enums.TipoSanguineo;
 
 /**
  *
- * @author Edison
+ * @author ProyectoHospital
  */
 public class HistorialMedico {
     private int Id;
