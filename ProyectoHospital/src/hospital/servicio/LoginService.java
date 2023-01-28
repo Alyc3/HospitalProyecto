@@ -2,13 +2,13 @@ package hospital.servicio;
 
 import hospital.modelo.Cuenta;
 import hospital.modelo.excepciones.ModeloException;
-import hospital.repositorio.CuentaRepository;
+import hospital.repositorio.RepositorioCuenta;
 
 public class LoginService {
 
-    private CuentaRepository cuentaRepository;
+    private RepositorioCuenta cuentaRepository;
 
-    public LoginService(CuentaRepository cuentaRepository) {
+    public LoginService(RepositorioCuenta cuentaRepository) {
         this.cuentaRepository = cuentaRepository;
     }
 
