@@ -1,20 +1,25 @@
 package hospital.codificacion.json;
 
+import hospital.modelo.ConsultaMedica;
 import hospital.modelo.Cuenta;
+import hospital.modelo.Diagnostico;
+import hospital.modelo.Examen;
+import hospital.modelo.HistorialMedico;
+import hospital.modelo.Medicina;
 import hospital.modelo.Persona;
-import hospital.modelo.Rol;
-import hospital.modelo.excepciones.ModeloException;
 import hospital.utilidades.excepciones.IncompatibleTypeForJSONFieldException;
-import java.util.HashMap;
-import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Contiene métodos estáticos para serializar y deserializar entidades
+ *
+ */
 public class CodificacionEntidad {
-    
-	/**
+
+    /**
      * Método para convertir una lista de objetos a un JSONArray.
      *
      * @param <T>
@@ -63,7 +68,7 @@ public class CodificacionEntidad {
         }
         return salida;
     }
-    
+
     /**
      * Método para codificar una persona
      *
@@ -104,5 +109,253 @@ public class CodificacionEntidad {
      */
     public static Persona[] decodificarPersonas(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
         return decodificarEntidades(objects, new DecodificadorPersona(), new Persona[objects.size()]);
+    }
+
+    /**
+     * Método para codificar una cuenta
+     *
+     * @param cuenta
+     * @return
+     */
+    public static JSONObject codificarCuenta(Cuenta cuenta) {
+        return (new CodificadorCuenta()).codificar(cuenta);
+    }
+
+    /**
+     * Método para codificar varias cuentas
+     *
+     * @param cuentas
+     * @return
+     */
+    public static JSONArray codificarCuentas(Cuenta[] cuentas) {
+        return codificarEntidades(cuentas, new CodificadorCuenta());
+    }
+
+    /**
+     * Método para decodificar una cuenta
+     *
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Cuenta decodificarCuenta(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorCuenta()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar varias cuentas
+     *
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Cuenta[] decodificarCuentas(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorCuenta(), new Cuenta[objects.size()]);
+    }
+
+    /**
+     * Método para codificar un historial medico
+     *
+     * @param historialMedico
+     * @return
+     */
+    public static JSONObject codificarHistorialMedico(HistorialMedico historialMedico) {
+        return (new CodificadorHistorialMedico()).codificar(historialMedico);
+    }
+
+    /**
+     * Método para codificar varios historiales medicos
+     *
+     * @param historialesMedicos
+     * @return
+     */
+    public static JSONArray codificarHistorialesMedicos(HistorialMedico[] historialesMedicos) {
+        return codificarEntidades(historialesMedicos, new CodificadorHistorialMedico());
+    }
+
+    /**
+     * Método para decodificar un historial medico
+     *
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static HistorialMedico decodificarHistorialMedico(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorHistorialMedico()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar varios historiales medicos
+     *
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static HistorialMedico[] decodificarHistorialesMedicos(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorHistorialMedico(), new HistorialMedico[objects.size()]);
+    }
+
+    /**
+     * Método para codificar una consulta medica
+     *
+     * @param consultaMedica
+     * @return
+     */
+    public static JSONObject codificarConsultaMedica(ConsultaMedica consultaMedica) {
+        return (new CodificadorConsultaMedica()).codificar(consultaMedica);
+    }
+
+    /**
+     * Método para codificar varias consultas medicas
+     *
+     * @param consultasMedicas
+     * @return
+     */
+    public static JSONArray codificarConsultasMedicas(ConsultaMedica[] consultasMedicas) {
+        return codificarEntidades(consultasMedicas, new CodificadorConsultaMedica());
+    }
+
+    /**
+     * Método para decodificar una consulta medica
+     *
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static ConsultaMedica decodificarConsultaMedica(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorConsultaMedica()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar varias consultas medicas
+     *
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static ConsultaMedica[] decodificarConsultasMedicas(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorConsultaMedica(), new ConsultaMedica[objects.size()]);
+    }
+
+    /**
+     * Método para codificar un Diagnostico
+     *
+     * @param diagnostico
+     * @return
+     */
+    public static JSONObject codificarDiagnostico(Diagnostico diagnostico) {
+        return (new CodificadorDiagnostico()).codificar(diagnostico);
+    }
+
+    /**
+     * Método para codificar varios Diagnosticos
+     *
+     * @param diagnosticos
+     * @return
+     */
+    public static JSONArray codificarDiagnosticos(Diagnostico[] diagnosticos) {
+        return codificarEntidades(diagnosticos, new CodificadorDiagnostico());
+    }
+
+    /**
+     * Método para decodificar un Diagnostico
+     *
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Diagnostico decodificarDiagnostico(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorDiagnostico()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar varios Diagnosticos
+     *
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Diagnostico[] decodificarDiagnosticos(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorDiagnostico(), new Diagnostico[objects.size()]);
+    }
+
+    /**
+     * Método para codificar un Examen
+     *
+     * @param examen
+     * @return
+     */
+    public static JSONObject codificarExamen(Examen examen) {
+        return (new CodificadorExamen()).codificar(examen);
+    }
+
+    /**
+     * Método para codificar varios Examenes
+     *
+     * @param examenes
+     * @return
+     */
+    public static JSONArray codificarExamenes(Examen[] examenes) {
+        return codificarEntidades(examenes, new CodificadorExamen());
+    }
+
+    /**
+     * Método para decodificar un Examen
+     *
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Examen decodificarExamen(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorExamen()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar vaiors Examenes
+     *
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static Examen[] decodificarExamenes(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorExamen(), new Examen[objects.size()]);
+    }
+
+    /**
+     * Método para codificar una Medicina
+     * @param medicina
+     * @return 
+     */
+    public static JSONObject codificarMedicina(Medicina medicina) {
+        return (new CodificadorMedicina()).codificar(medicina);
+    }
+
+    /**
+     * Método para codificar varias medicinas
+     * @param medicinas
+     * @return 
+     */
+    public static JSONArray codificarMedicinas(Medicina[] medicinas) {
+        return codificarEntidades(medicinas, new CodificadorMedicina());
+    }
+
+    /**
+     * Método para decodificar una medicina
+     * @param object
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException 
+     */
+    public static Medicina decodificarMedicina(JSONObject object) throws IncompatibleTypeForJSONFieldException {
+        return (new DecodificadorMedicina()).decodificar(object);
+    }
+
+    /**
+     * Método para decodificar varias medicinas
+     * @param objects
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException 
+     */
+    public static Medicina[] decodificarMedicinas(JSONArray objects) throws IncompatibleTypeForJSONFieldException {
+        return decodificarEntidades(objects, new DecodificadorMedicina(), new Medicina[objects.size()]);
     }
 }

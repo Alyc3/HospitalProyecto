@@ -2,13 +2,29 @@ package hospital.modelo.excepciones;
 
 public class ModeloException extends Exception {
 
-    private Exception e;
+    private ErrorType errorType;
 
-    /**
-     * Retorna una excepción del Modelo
-     * @param message 
-     */
-    public ModeloException(String message) {
+    public ModeloException(ErrorType errorType) {
+        super();
+        this.errorType = errorType;
+    }
+
+    public ModeloException(String message, ErrorType errorType) {
         super(message);
+        this.errorType = errorType;
+    }
+
+    public ModeloException(String message, Throwable causa, ErrorType errorType) {
+        super(message, causa);
+        this.errorType = errorType;
+    }
+
+    public ModeloException(Throwable causa, ErrorType errorType) {
+        super(causa);
+        this.errorType = errorType;
+    }
+
+    public ErrorType getErrorType() {
+        return errorType;
     }
 }
