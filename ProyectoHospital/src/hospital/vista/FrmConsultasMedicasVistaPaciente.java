@@ -1,29 +1,25 @@
 package hospital.vista;
 
-import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioLogin;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.vista.paneles.PanelConsultasMedicas;
+import hospital.vista.paneles.PanelIzquierdoPaciente;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmLogin {
+public class FrmConsultasMedicasVistaPaciente {
 
     private FrmMain window;
-
-    private Rol rol;
 
     private JPanel panelMain;
     private JPanel panelIzquierdo;
     private JPanel panelCuerpo;
-    private JPanel panelFormularioLogin;
+    private JPanel panelConsultasMedicas;
 
-    public FrmLogin(FrmMain window) {
+    public FrmConsultasMedicasVistaPaciente(FrmMain window) {
         this.window = window;
     }
 
-    public void show(Rol rol) {
+    public void mostrar() {
         window.removeAll();
-        this.rol = rol;
         Container cp = window.getContentPane();
         cp.setLayout(new BorderLayout());
         makePanelMain();
@@ -41,17 +37,20 @@ public class FrmLogin {
     }
 
     private void makePanelLeft() {
-        panelIzquierdo = new PanelIzquierdoDefault(window);
+        panelIzquierdo = new PanelIzquierdoPaciente(window);
     }
 
     private void makePanelBody() {
         panelCuerpo = new JPanel();
         panelCuerpo.setLayout(new GridBagLayout());
-        makePanelFormularioLogin();
-        panelCuerpo.add(panelFormularioLogin);
+
+        makePanelConsultasMedicas();
+
+        panelCuerpo.add(panelConsultasMedicas);
     }
 
-    private void makePanelFormularioLogin() {
-        panelFormularioLogin = new PanelFormularioLogin(window, rol);
+    private void makePanelConsultasMedicas() {
+        panelConsultasMedicas = new PanelConsultasMedicas(window);
+        
     }
 }

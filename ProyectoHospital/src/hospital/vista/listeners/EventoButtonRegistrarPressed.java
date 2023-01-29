@@ -19,35 +19,35 @@ public class EventoButtonRegistrarPressed implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Registrarse");
-
-        Cuenta cuenta = view.getCuenta();
-        System.out.println(cuenta.getUsuario() + " " + cuenta.getClave());
-
-        Persona persona = view.getPersona();
-        System.out.println("Cedula: " + persona.getCedula());
-        System.out.println("Nombre: " + persona.getNombre());
-        System.out.println("Apellido: " + persona.getApellido());
-        System.out.println("Correo: " + persona.getCorreo());
-        System.out.println("Telefono: " + persona.getTelefono());
-        System.out.println("Direccion: " + persona.getDireccion());
-        System.out.println("Genero: " + persona.getGenero());
-        System.out.println("Rol: " + persona.getRol().getNombre());
-
-        if (Medico.class.isInstance(persona)) {
-            System.out.println("Especialidad: " + ((Medico) persona).getEspecialidad());
-        }
-
-        HistorialMedico hs = view.getHistorialMedico();
-        System.out.println(hs.getFechaNacimiento());
-
-        try {
-            Cuenta cuenta2 = ManagerComponentes.services.registrarPersona(cuenta, persona, hs);
-            view.showResultadoRegistro(true, "El registro ");
-        } catch (ModeloException exc) {
-            view.showResultadoRegistro(false, exc.getMessage());
-            //	System.out.println(exc.getErrorType());
-        }
+//        System.out.println("Registrarse");
+//
+//        Cuenta cuenta = view.getCuenta();
+//        System.out.println(cuenta.getUsuario() + " " + cuenta.getClave());
+//
+//        Persona persona = view.getPersona();
+//        System.out.println("Cedula: " + persona.getCedula());
+//        System.out.println("Nombre: " + persona.getNombre());
+//        System.out.println("Apellido: " + persona.getApellido());
+//        System.out.println("Correo: " + persona.getCorreo());
+//        System.out.println("Telefono: " + persona.getTelefono());
+//        System.out.println("Direccion: " + persona.getDireccion());
+//        System.out.println("Genero: " + persona.getGenero());
+//        System.out.println("Rol: " + persona.getRol().getNombre());
+//
+//        if (Medico.class.isInstance(persona)) {
+//            System.out.println("Especialidad: " + ((Medico) persona).getEspecialidad());
+//        }
+//
+//        HistorialMedico hs = view.getHistorialMedico();
+//        System.out.println(hs.getFechaNacimiento());
+//
+//        try {
+//            Cuenta cuenta2 = ManagerComponentes.services.registrarPersona(cuenta, persona, hs);
+//            view.showResultadoRegistro(true, "El registro ");
+//        } catch (ModeloException exc) {
+//            view.showResultadoRegistro(false, exc.getMessage());
+//            //	System.out.println(exc.getErrorType());
+//        }
         /*catch(Exception e){
 			System.out.println(e);
 		}*/

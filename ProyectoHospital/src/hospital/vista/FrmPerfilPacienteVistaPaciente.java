@@ -1,29 +1,24 @@
 package hospital.vista;
 
-import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioSignup;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.vista.paneles.PanelIzquierdoPaciente;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmSignup {
+public class FrmPerfilPacienteVistaPaciente {
 
     private FrmMain window;
-
-    private Rol rol;
 
     private JPanel panelMain;
     private JPanel panelLeft;
     private JPanel panelBody;
-    private JPanel panelFormularioSignup;
+    private JPanel panelPerfilPersona;
 
-    public FrmSignup(FrmMain window) {
+    public FrmPerfilPacienteVistaPaciente(FrmMain window) {
         this.window = window;
     }
 
-    public void mostrar(Rol rol) {
+    public void mostrar() {
         window.removeAll();
-        this.rol = rol;
         Container cp = window.getContentPane();
         cp.setLayout(new BorderLayout());
         makePanelMain();
@@ -41,18 +36,21 @@ public class FrmSignup {
     }
 
     private void makePanelLeft() {
-        panelLeft = new PanelIzquierdoDefault(window);
+        panelLeft = new PanelIzquierdoPaciente(window);
     }
 
     private void makePanelBody() {
         panelBody = new JPanel();
-        panelBody.setLayout(new GridBagLayout());
-        panelBody.setBackground(new Color(238, 242, 245));
-        makePanelFormularioSignup();
-        panelBody.add(panelFormularioSignup);
+        panelBody.setLayout(new GridBagLayout()); 
+        makePanelPerfilPersona();
+        panelBody.add(panelPerfilPersona);
     }
 
-    private void makePanelFormularioSignup() {
-        panelFormularioSignup = new PanelFormularioSignup(window, rol);
+    private void makePanelPerfilPersona() {
+        //panelPerfilPersona = new PanelPerfilPersona(window, GlobalVariables.ROL_PACIENTE);
+        panelPerfilPersona = new JPanel();
+        panelPerfilPersona.setLayout(new GridBagLayout());
+        JLabel label = new JLabel("Perfil Paciente");
+        panelPerfilPersona.add(label);
     }
 }

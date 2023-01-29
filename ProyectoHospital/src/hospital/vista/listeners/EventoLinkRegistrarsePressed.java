@@ -13,7 +13,7 @@ public class EventoLinkRegistrarsePressed implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Ir a la vista para registrarse");
-        view.loadSignupView(view.getRol());
+//        System.out.println("Ir a la vista para registrarse");
+//        view.loadSignupView(view.getRol());
     }
 }

@@ -1,29 +1,26 @@
 package hospital.vista;
 
-import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioSignup;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.modelo.global.VariablesGlobales;
+import hospital.vista.paneles.PanelHistorialMedico;
+import hospital.vista.paneles.PanelIzquierdoPaciente;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmSignup {
+public class FrmHistorialMedicoVistaPaciente {
 
     private FrmMain window;
-
-    private Rol rol;
 
     private JPanel panelMain;
     private JPanel panelLeft;
     private JPanel panelBody;
-    private JPanel panelFormularioSignup;
+    private JPanel panelHistorialMedico;
 
-    public FrmSignup(FrmMain window) {
+    public FrmHistorialMedicoVistaPaciente(FrmMain window) {
         this.window = window;
     }
 
-    public void mostrar(Rol rol) {
+    public void mostrar() {
         window.removeAll();
-        this.rol = rol;
         Container cp = window.getContentPane();
         cp.setLayout(new BorderLayout());
         makePanelMain();
@@ -34,25 +31,31 @@ public class FrmSignup {
     private void makePanelMain() {
         panelMain = new JPanel();
         panelMain.setLayout(new BorderLayout());
+
         makePanelLeft();
         makePanelBody();
+
         panelMain.add(panelLeft, BorderLayout.WEST);
         panelMain.add(panelBody, BorderLayout.CENTER);
     }
 
     private void makePanelLeft() {
-        panelLeft = new PanelIzquierdoDefault(window);
+        panelLeft = new PanelIzquierdoPaciente(window);
     }
 
     private void makePanelBody() {
         panelBody = new JPanel();
         panelBody.setLayout(new GridBagLayout());
-        panelBody.setBackground(new Color(238, 242, 245));
-        makePanelFormularioSignup();
-        panelBody.add(panelFormularioSignup);
+        makePanelHistorialMedico();
+        panelBody.add(panelHistorialMedico);
     }
 
-    private void makePanelFormularioSignup() {
-        panelFormularioSignup = new PanelFormularioSignup(window, rol);
+    private void makePanelHistorialMedico() {
+        panelHistorialMedico = new PanelHistorialMedico(window, VariablesGlobales.ROL_PACIENTE);
+        /*panelHistorialMedico = new JPanel();
+		panelHistorialMedico.setLayout(new GridBagLayout());
+		JLabel label = new JLabel("Historial Médico");
+
+		panelHistorialMedico.add(label);*/
     }
 }

@@ -14,9 +14,9 @@ public class EventoButtonIniciarSesionPressed implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Iniciar sesión");
-        Cuenta cuenta = view.getCuenta();
-        System.out.println(cuenta.getUsuario() + " " + cuenta.getClave());
+//        System.out.println("Iniciar sesión");
+//        Cuenta cuenta = view.getCuenta();
+//        System.out.println(cuenta.getUsuario() + " " + cuenta.getClave());
         //	view.get
 
         //	Rol rol = new Rol(1, "Rol-Medico");

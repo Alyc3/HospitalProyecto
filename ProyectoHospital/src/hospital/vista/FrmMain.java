@@ -2,69 +2,78 @@ package hospital.vista;
 
 import hospital.modelo.Rol;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import javax.swing.*;
 
 public class FrmMain extends JFrame {
 
-    private FrmHome homeView;
-    private FrmLogin loginView;
-    private FrmSignup signupView;
-    //private PacienteMainView pacienteMainView;
-    //privateMedicoMainView medicoMainView;
+    private FrmHome frmHome;
+    private FrmLogin frmLogin;
+    private FrmSignup frmSignup;
+    private FrmPerfilPacienteVistaPaciente frmPerfilPacienteVistaPaciente;
+    private FrmHistorialMedicoVistaPaciente frmHistorialMedicoVistaPaciente;
+    private FrmConsultasMedicasVistaPaciente frmConsultasMedicasVistaPaciente;
+    private FrmPerfilMedicoVistaMedico frmPerfilMedicoVistaMedico;
+    private FrmPacientesPendientes frmPacientesPendientes;
 
-    // main window
     public FrmMain() {
         super("Administracion Hospital");
 
-        homeView = new FrmHome(this);
-        loginView = new FrmLogin(this);
-        signupView = new FrmSignup(this);
-        //pacienteMainView = new PacienteMainView(this);
-        //medicoMainView = new MedicoMainView(this);
+        frmHome = new FrmHome(this);
+        frmLogin = new FrmLogin(this);
+        frmSignup = new FrmSignup(this);
+        frmPerfilPacienteVistaPaciente = new FrmPerfilPacienteVistaPaciente(this);
+        frmHistorialMedicoVistaPaciente = new FrmHistorialMedicoVistaPaciente(this);
+        frmConsultasMedicasVistaPaciente = new FrmConsultasMedicasVistaPaciente(this);
+        frmPerfilMedicoVistaMedico = new FrmPerfilMedicoVistaMedico(this);
+        frmPacientesPendientes = new FrmPacientesPendientes(this);
 
-        setSize(900, 600);
+        setSize(1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-
-        homeView.show();
-
-        /*
-		Container cp = window.getContentPane();
-		cp.removeAll();
-		cp.repaint();
-		System.out.println("medico");
-
-		cp.setLayout(new FlowLayout());
-         */
-        //clear();
         setLocationRelativeTo(this);
+        frmHome.mostrar();
     }
 
-    public void clear() {
+    public void removeAll() {
         Container cp = getContentPane();
         cp.removeAll();
+    }
+
+    public void repaint() {
+        Container cp = getContentPane();
+        cp.validate();
         cp.repaint();
     }
 
     public void loadHomeView() {
-        homeView.show();
+        frmHome.mostrar();
     }
 
     public void loadLoginView(Rol rol) {
-        loginView.show(rol);
+        frmLogin.show(rol);
     }
 
     public void loadSignupView(Rol rol) {
-        signupView.show(rol);
+        frmSignup.mostrar(rol);
     }
 
-    public void loadPacienteMainView() {
-        //pacienteMainView.show();
+    public void loadConsultasMedicasPacienteView() {
+        frmConsultasMedicasVistaPaciente.mostrar();
     }
 
-    public void loadMedicoMainView() {
-        //medicoMainView.show();		
+    public void loadPerfilPacientePacienteView() {
+        frmPerfilPacienteVistaPaciente.mostrar();
+    }
+
+    public void loadHistorialMedicoPacienteView() {
+        frmHistorialMedicoVistaPaciente.mostrar();
+    }
+
+    public void loadPerfilMedicoMedicoView() {
+        frmPerfilMedicoVistaMedico.mostrar();
+    }
+
+    public void loadPacientesPendientesView() {
+        frmPacientesPendientes.show();
     }
 }

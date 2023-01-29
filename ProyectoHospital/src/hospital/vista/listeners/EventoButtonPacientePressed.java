@@ -14,6 +14,6 @@ public class EventoButtonPacientePressed implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        view.loadLoginView(VariablesGlobales.ROL_PACIENTE);
+//        view.loadLoginView(VariablesGlobales.ROL_PACIENTE);
     }
 }

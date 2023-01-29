@@ -1,29 +1,24 @@
 package hospital.vista;
 
-import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioSignup;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.vista.paneles.PanelIzquierdoMedico;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmSignup {
+public class FrmPacientesPendientes {
 
     private FrmMain window;
-
-    private Rol rol;
 
     private JPanel panelMain;
     private JPanel panelLeft;
     private JPanel panelBody;
-    private JPanel panelFormularioSignup;
+    private JPanel panelPacientesPendientes;
 
-    public FrmSignup(FrmMain window) {
+    public FrmPacientesPendientes(FrmMain window) {
         this.window = window;
     }
 
-    public void mostrar(Rol rol) {
+    public void show() {
         window.removeAll();
-        this.rol = rol;
         Container cp = window.getContentPane();
         cp.setLayout(new BorderLayout());
         makePanelMain();
@@ -41,18 +36,21 @@ public class FrmSignup {
     }
 
     private void makePanelLeft() {
-        panelLeft = new PanelIzquierdoDefault(window);
+        panelLeft = new PanelIzquierdoMedico(window);
     }
 
     private void makePanelBody() {
         panelBody = new JPanel();
         panelBody.setLayout(new GridBagLayout());
-        panelBody.setBackground(new Color(238, 242, 245));
-        makePanelFormularioSignup();
-        panelBody.add(panelFormularioSignup);
+        makePanelPacientesPendientes();
+        panelBody.add(panelPacientesPendientes);
     }
 
-    private void makePanelFormularioSignup() {
-        panelFormularioSignup = new PanelFormularioSignup(window, rol);
+    private void makePanelPacientesPendientes() {
+        //panelPacientesPendientes = new PanelPacientesPendientes(window);
+        panelPacientesPendientes = new JPanel();
+        panelPacientesPendientes.setLayout(new GridBagLayout());
+        JLabel label = new JLabel("Pacientes pendientes");
+        panelPacientesPendientes.add(label);
     }
 }

@@ -1,6 +1,5 @@
 package hospital;
 
-import hospital.modelo.Rol;
 import hospital.modelo.excepciones.ModeloException;
 import hospital.modelo.global.ManagerComponentes;
 import hospital.vista.FrmMain;
@@ -10,8 +9,13 @@ public class Main {
 
     public static void main(String[] args) throws ModeloException, FileNotFoundException {
 
-        ManagerComponentes.init();
-        FrmMain hw = new FrmMain();
-        hw.setVisible(true);
+        try {
+            ManagerComponentes.init();
+            FrmMain frmMain = new FrmMain();
+            frmMain.setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("...");
+        }
     }
 }
