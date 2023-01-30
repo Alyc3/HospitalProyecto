@@ -5,4 +5,3 @@ en los cuales participan los siguientes estudiantes:
 1)Ivan Gonzales
 2)Johnny Armijos
 3)Alyce Maldonado
-4)JeanPiere Remache
