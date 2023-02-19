@@ -1,12 +1,20 @@
 package hospital;
 
-import hospital.modelo.Rol;
+import hospital.modelo.excepciones.ModeloException;
+import hospital.modelo.global.ManagerComponentes;
+import hospital.vista.FrmMain;
+import java.io.FileNotFoundException;
 
 public class Main {
 
-	private static Rol rolPaciente = new Rol(1, "Rol-Medico");
-	private static Rol rolMedico = new Rol(2, "Rol-Paciente");
-		
-	public static void main(String[] args){
-	}
+    public static void main(String[] args) throws ModeloException, FileNotFoundException {
+
+        try {
+            ManagerComponentes.init();
+            FrmMain frmMain = new FrmMain();
+            frmMain.setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
