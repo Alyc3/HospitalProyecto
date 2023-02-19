@@ -1,9 +1,9 @@
 package hospital.codificacion.json;
 
-//import hospital.modelo.enumeradores.EncontrarTipoSanguineo;
-//import hospital.modelo.enumeradores.TipoExamen;
-//import hospital.modelo.enumeradores.EncontrarTipoExamen;
-//import hospital.modelo.enumeradores.TipoSanguineo;
+import hospital.modelo.enumeradores.EncontrarTipoSanguineo;
+import hospital.modelo.enumeradores.TipoExamen;
+import hospital.modelo.enumeradores.EncontrarTipoExamen;
+import hospital.modelo.enumeradores.TipoSanguineo;
 import hospital.utilidades.excepciones.IncompatibleTypeForJSONFieldException;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
@@ -181,57 +181,57 @@ public class LeectorArchivoJSON {
         }
     }
 
-//    /**
-//     * Método para retornar un TipoSAnquineo con el valor del campo fieldName
-//     * dentro del JSONObject al que se hace referencia
-//     *
-//     * @param object
-//     * @param fieldName
-//     * @return
-//     * @throws IncompatibleTypeForJSONFieldException
-//     */
-//    public static TipoSanguineo getTipoSanguineo(JSONObject object, String fieldName) throws IncompatibleTypeForJSONFieldException {
-//        try {
-//            String tipoSanguineoStr = getString(object, fieldName);
-//            if (tipoSanguineoStr == null) {
-//                return null;
-//            }
-//            TipoSanguineo tipoSanguineo = EncontrarTipoSanguineo.encontrar(tipoSanguineoStr);
-//            if (tipoSanguineo != null) {
-//                return tipoSanguineo;
-//            }
-//        } catch (IncompatibleTypeForJSONFieldException e) {
-//            throw new IncompatibleTypeForJSONFieldException(e, fieldName, TipoSanguineo.class.getName());
-//        }
-//        //Ocurre cuando no se encuentra un TipoSanguineo que coincida.
-//        throw new IncompatibleTypeForJSONFieldException(fieldName, TipoSanguineo.class.getName());
-//    }
-//
-//    /**
-//     * Método para retornar un TipoSanguineo con el valor del campo fieldName
-//     * dento del JSONObject al que se hace referencia
-//     *
-//     * @param object
-//     * @param fieldName
-//     * @return
-//     * @throws IncompatibleTypeForJSONFieldException
-//     */
-//    public static TipoExamen getTipoExamen(JSONObject object, String fieldName) throws IncompatibleTypeForJSONFieldException {
-//        try {
-//            String tipoExamenStr = getString(object, fieldName);
-//            if (tipoExamenStr == null) {
-//                return null;
-//            }
-//
-//            TipoExamen tipoExamen = EncontrarTipoExamen.encontrar(tipoExamenStr);
-//            if (tipoExamen != null) {
-//                return tipoExamen;
-//            }
-//        } catch (IncompatibleTypeForJSONFieldException e) {
-//            throw new IncompatibleTypeForJSONFieldException(e, fieldName, TipoExamen.class.getName());
-//        }
-//
-//        // Ocurre cuando no se encuentra un TipoExamen que coincida
-//        throw new IncompatibleTypeForJSONFieldException(fieldName, TipoExamen.class.getName());
-//    }
+    /**
+     * Método para retornar un TipoSAnquineo con el valor del campo fieldName
+     * dentro del JSONObject al que se hace referencia
+     *
+     * @param object
+     * @param fieldName
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static TipoSanguineo getTipoSanguineo(JSONObject object, String fieldName) throws IncompatibleTypeForJSONFieldException {
+        try {
+            String tipoSanguineoStr = getString(object, fieldName);
+            if (tipoSanguineoStr == null) {
+                return null;
+            }
+            TipoSanguineo tipoSanguineo = EncontrarTipoSanguineo.encontrar(tipoSanguineoStr);
+            if (tipoSanguineo != null) {
+                return tipoSanguineo;
+            }
+        } catch (IncompatibleTypeForJSONFieldException e) {
+            throw new IncompatibleTypeForJSONFieldException(e, fieldName, TipoSanguineo.class.getName());
+        }
+        //Ocurre cuando no se encuentra un TipoSanguineo que coincida.
+        throw new IncompatibleTypeForJSONFieldException(fieldName, TipoSanguineo.class.getName());
+    }
+
+    /**
+     * Método para retornar un TipoSanguineo con el valor del campo fieldName
+     * dento del JSONObject al que se hace referencia
+     *
+     * @param object
+     * @param fieldName
+     * @return
+     * @throws IncompatibleTypeForJSONFieldException
+     */
+    public static TipoExamen getTipoExamen(JSONObject object, String fieldName) throws IncompatibleTypeForJSONFieldException {
+        try {
+            String tipoExamenStr = getString(object, fieldName);
+            if (tipoExamenStr == null) {
+                return null;
+            }
+
+            TipoExamen tipoExamen = EncontrarTipoExamen.encontrar(tipoExamenStr);
+            if (tipoExamen != null) {
+                return tipoExamen;
+            }
+        } catch (IncompatibleTypeForJSONFieldException e) {
+            throw new IncompatibleTypeForJSONFieldException(e, fieldName, TipoExamen.class.getName());
+        }
+
+        // Ocurre cuando no se encuentra un TipoExamen que coincida
+        throw new IncompatibleTypeForJSONFieldException(fieldName, TipoExamen.class.getName());
+    }
 }
