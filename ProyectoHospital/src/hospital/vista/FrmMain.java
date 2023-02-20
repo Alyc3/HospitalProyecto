@@ -2,69 +2,55 @@ package hospital.vista;
 
 import hospital.modelo.Rol;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import javax.swing.*;
 
 public class FrmMain extends JFrame {
 
-    private FrmHome homeView;
-//    private FrmLogin loginView;
-//    private FrmSignup signupView;
-    //private PacienteMainView pacienteMainView;
-    //privateMedicoMainView medicoMainView;
+    private FrmHome frmHome;
+    private FrmSignup frmSignup;
+    private FrmHistorialMedico frmHistorialMedico;
+    private FrmVerPerfil frmVerPerfil;
 
-    // main window
     public FrmMain() {
         super("Administracion Hospital");
 
-        homeView = new FrmHome(this);
-//        loginView = new FrmLogin(this);
-//        signupView = new FrmSignup(this);
-        //pacienteMainView = new PacienteMainView(this);
-        //medicoMainView = new MedicoMainView(this);
+        frmHome = new FrmHome(this);
+        frmSignup = new FrmSignup(this);
+        frmVerPerfil = new FrmVerPerfil(this);
+        frmHistorialMedico = new FrmHistorialMedico(this);
 
-        setSize(900, 600);
+        setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-
-        homeView.show();
-
-        /*
-		Container cp = window.getContentPane();
-		cp.removeAll();
-		cp.repaint();
-		System.out.println("medico");
-
-		cp.setLayout(new FlowLayout());
-         */
-        //clear();
         setLocationRelativeTo(this);
+        frmHome.mostrar();
     }
 
-    public void clear() {
+    public void removeAll() {
         Container cp = getContentPane();
         cp.removeAll();
+    }
+
+    public void repaint() {
+        Container cp = getContentPane();
+        cp.validate();
         cp.repaint();
     }
 
-    public void loadHomeView() {
-        homeView.show();
+    public void loadFrmHome() {
+        frmHome.mostrar();
     }
 
-//    public void loadLoginView(Rol rol) {
-//        loginView.show(rol);
-//    }
-//
-//    public void loadSignupView(Rol rol) {
-//        signupView.show(rol);
-//    }
-
-    public void loadPacienteMainView() {
-        //pacienteMainView.show();
+    public void loadFrmSignup(Rol rol) {
+        frmSignup.mostrar(rol);
     }
 
-    public void loadMedicoMainView() {
-        //medicoMainView.show();		
+    public void loadFrmVerPerfil(Rol rol) {
+        frmVerPerfil.show(rol);
     }
+
+    public void loalFrmHistorialMedico(Rol rol, Integer idPaciente) {
+        frmHistorialMedico.show(rol, idPaciente);
+    }
+
 }
