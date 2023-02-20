@@ -5,8 +5,9 @@ import java.util.Comparator;
 public class Ordenamiento {
 
     /**
-     * Método para mezclar dos sublistas adyacentes (previamente ordenadas), de tal forma
-     * que la sublista resultante esté ordenada
+     * Método para mezclar dos sublistas adyacentes (previamente ordenadas), de
+     * tal forma que la sublista resultante esté ordenada
+     *
      * @param <T>
      * @param arr
      * @param l1
@@ -16,7 +17,7 @@ public class Ordenamiento {
      * @param aux
      * @param comparador
      * @throws IllegalArgumentException
-     * @throws ArrayIndexOutOfBoundsException 
+     * @throws ArrayIndexOutOfBoundsException
      */
     private static <T> void merge(T[] arr, int l1, int r1, int l2, int r2, T[] aux, Comparator<T> comparador)
             throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
@@ -56,13 +57,14 @@ public class Ordenamiento {
 
     /**
      * Método genérico para el ordenamiento de listas
+     *
      * @param <T>
      * @param arr
      * @param l
      * @param r
      * @param comparador
      * @throws IllegalArgumentException
-     * @throws ArrayIndexOutOfBoundsException 
+     * @throws ArrayIndexOutOfBoundsException
      */
     public static <T> void mergeSort(T[] arr, int l, int r, Comparator<T> comparador) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
         if (l >= r) {
@@ -84,6 +86,8 @@ public class Ordenamiento {
     }
 
     public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
-        mergeSort(arr, 0, arr.length, comparator);
+        if (arr.length > 0) {
+            mergeSort(arr, 0, arr.length, comparator);
+        }
     }
 }
