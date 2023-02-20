@@ -3,7 +3,7 @@ package hospital.controlador.lista;
 // List es la implementación de una lista
 // doblemente enlazada.
 public class ListaEnlazada<T> {
-    
+
     protected int size;
     protected Nodo<T> cabecera;
 
