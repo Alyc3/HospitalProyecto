@@ -5,6 +5,9 @@ import hospital.modelo.global.ManagerComponentes;
 import hospital.vista.FrmMain;
 import java.io.FileNotFoundException;
 
+/**
+ * Clase principal desde donde se ejecuta el programa
+ */
 public class Main {
 
     public static void main(String[] args) throws ModeloException, FileNotFoundException {
@@ -15,7 +18,6 @@ public class Main {
             frmMain.setVisible(true);
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("...");
         }
     }
 }

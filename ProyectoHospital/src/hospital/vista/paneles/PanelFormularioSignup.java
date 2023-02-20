@@ -5,378 +5,331 @@ import hospital.modelo.HistorialMedico;
 import hospital.modelo.Medico;
 import hospital.modelo.Persona;
 import hospital.modelo.Rol;
+import hospital.modelo.enumeradores.EncontrarTipoSanguineo;
+import hospital.modelo.enumeradores.TipoSanguineo;
+import hospital.modelo.excepciones.CampoNovalidoException;
+import hospital.modelo.excepciones.ErrorType;
+import hospital.modelo.excepciones.ModeloException;
 import hospital.modelo.global.VariablesGlobales;
 import hospital.modelo.utilities.Tiempo.UtilidadesTiempo;
 import hospital.vista.FrmMain;
+import hospital.vista.listeners.RedirigirAFrmLogin;
 import hospital.vista.listeners.RegistrarPersona;
+import hospital.vista.utilities.CrearFormularios;
+import hospital.vista.utilities.ExtractorDeDatosDeForms;
 import java.awt.*;
+import java.time.LocalDate;
 import javax.swing.*;
 
+/**
+ * Sirve para crear la configuración del panel del formulario de signup,
+ * dependiendo del rol del paciente
+ */
 public class PanelFormularioSignup extends JPanel {
 
-    private FrmMain window;
+    private FrmMain frmMain;
 
     private Rol rol;
 
-    private JPanel panelFormulario;
+    private JPanel panelMain;
+    private JPanel panelTitulo;
+    private JPanel panelDatos;
+    private JPanel panelBotones;
 
-    private JLabel labelTituloFormulario;
+    private JLabel labelTitulo;
     private JLabel labelUsuario;
     private JLabel labelClave;
     private JLabel labelCorreo;
-    private JLabel labelTelefono;
-    private JLabel labelCedula;
+    private JLabel labelTipoSanguineo;
     private JLabel labelNombre;
     private JLabel labelApellido;
-    private JLabel labelDireccion;
-    private JLabel labelGenero;
+    private JLabel labelCedula;
+    private JLabel labelTelefono;
+    private JLabel labelFechaNacimiento;
     private JLabel labelDia;
     private JLabel labelMes;
     private JLabel labelAño;
+    private JLabel labelDireccion;
+    private JLabel labelGenero;
     private JLabel labelEspecialidad;
-
-    private JButton linkIniciarSesion;
+    private JLabel labelErrorUsuario;
+    private JLabel labelErrorClave;
+    private JLabel labelErrorCorreo;
+    private JLabel labelErrorTipoSanguineo;
+    private JLabel labelErrorNombre;
+    private JLabel labelErrorApellido;
+    private JLabel labelErrorCedula;
+    private JLabel labelErrorTelefono;
+    private JLabel labelErrorFechaNacimiento;
+    private JLabel labelErrorDia;
+    private JLabel labelErrorMes;
+    private JLabel labelErrorAño;
+    private JLabel labelErrorDireccion;
+    private JLabel labelErrorGenero;
+    private JLabel labelErrorEspecialidad;
 
     private JTextField fieldUsuario;
     private JPasswordField fieldClave;
     private JTextField fieldCorreo;
-    private JTextField fieldTelefono;
-    private JTextField fieldCedula;
+    private JComboBox<String> fieldTipoSanguineo;
     private JTextField fieldNombre;
     private JTextField fieldApellido;
-    private JTextField fieldDireccion;
-    private JComboBox<String> fieldGenero;
+    private JTextField fieldCedula;
+    private JTextField fieldTelefono;
     private JComboBox<String> fieldDia;
     private JComboBox<String> fieldMes;
     private JComboBox<String> fieldAño;
+    private JTextField fieldDireccion;
+    private JComboBox<String> fieldGenero;
     private JTextField fieldEspecialidad;
 
     private JButton buttonRegistrar;
 
-    String[] optionsGenero = {"F", "M"};
-    String[] optionsAño = UtilidadesTiempo.getAniosDesdeHasta(1900, 2023);
-    String[] optionsMes = UtilidadesTiempo.getMesesEspaniol();
-    String[] optionsDia = UtilidadesTiempo.getMaximoNumDiasMes();
+    private JButton linkIniciarSesion;
 
-    public PanelFormularioSignup(FrmMain window, Rol rol) {
-        this.window = window;
+    private String[] optionsTipoSanguineo = {"A+", "O+", "B+", "AB+", "A-", "O-", "B-", "AB-"};
+    private String[] optionsGenero = {"M", "F"};
+    private String[] optionsAño = UtilidadesTiempo.getAniosDesdeHasta(1900, 2023);
+    private String[] optionsMes = UtilidadesTiempo.getMesesEspaniol();
+    private String[] optionsDia = UtilidadesTiempo.getMaximoNumDiasMes();
+
+    public PanelFormularioSignup(FrmMain frmMain, Rol rol) {
+        this.frmMain = frmMain;
         this.rol = rol;
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        makePanelFormulario();
-        add(panelFormulario);
+        setLayout(new BorderLayout());
+        makePanelMain();
+        add(panelMain, BorderLayout.CENTER);
     }
 
-    private void makePanelFormulario() {
-        panelFormulario = new JPanel();
-        panelFormulario.setLayout(new BoxLayout(panelFormulario, BoxLayout.Y_AXIS));
+    private void makePanelMain() {
+        panelMain = new JPanel();
+        panelMain.setLayout(new BoxLayout(panelMain, BoxLayout.Y_AXIS));
+        panelMain.setBackground(Color.WHITE);
+        panelMain.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel panelTituloFormulario = new JPanel();
-        panelTituloFormulario.setLayout(new FlowLayout());
-        makeLabelTituloFormulario();
-        panelTituloFormulario.setBackground(new Color(0, 0, 0, 0));
-        panelTituloFormulario.add(labelTituloFormulario);
+        makePanelTitulo();
+        makePanelDatos();
+        makePanelBotones();
 
-        JPanel panelUsuario = new JPanel();
-        panelUsuario.setLayout(new BorderLayout());
-        labelUsuario = makeLabelForFormulario("Usuario");
-        fieldUsuario = makeTextFieldForFormulario(300, 25);
-        panelUsuario.add(labelUsuario, BorderLayout.NORTH);
-        panelUsuario.add(fieldUsuario, BorderLayout.SOUTH);
-        panelUsuario.setBackground(new Color(0, 0, 0, 0));
-        panelUsuario.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelMain.add(panelTitulo);
+        panelMain.add(panelDatos);
+        panelMain.add(panelBotones);
+    }
 
-        JPanel panelClave = new JPanel();
+    private void makePanelTitulo() {
+        panelTitulo = new JPanel();
+        panelTitulo.setLayout(new FlowLayout());
+        panelTitulo.setBackground(new Color(0, 0, 0, 0));
+
+        labelTitulo = CrearFormularios.crearTituloLabel(rol.equals(VariablesGlobales.ROL_MEDICO) ? "REGISTRO MÉDICOS" : "REGISTRO PACIENTES");
+
+        panelTitulo.add(labelTitulo);
+    }
+
+    private void makePanelDatos() {
+        panelDatos = new JPanel();
+        panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
+        panelDatos.setBackground(new Color(0, 0, 0, 0));
+        panelDatos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        labelUsuario = CrearFormularios.crearEtiquetaDesdeCampo("Usuario");
+        fieldUsuario = CrearFormularios.crearTextField(13);
+        labelErrorUsuario = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelClave = CrearFormularios.crearEtiquetaDesdeCampo("Clave");
+        fieldClave = CrearFormularios.crearPasswordFiled(12);
+        labelErrorClave = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelCorreo = CrearFormularios.crearEtiquetaDesdeCampo("Correo");
+        fieldCorreo = CrearFormularios.crearTextField(18);
+        labelErrorCorreo = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelTipoSanguineo = CrearFormularios.crearEtiquetaDesdeCampo("Tipo sanguíneo");
+        fieldTipoSanguineo = CrearFormularios.crearComboBox(94, 34, optionsTipoSanguineo);
+        labelErrorTipoSanguineo = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelNombre = CrearFormularios.crearEtiquetaDesdeCampo("Nombre");
+        fieldNombre = CrearFormularios.crearTextField(10);
+        labelErrorNombre = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelApellido = CrearFormularios.crearEtiquetaDesdeCampo("Apellido");
+        fieldApellido = CrearFormularios.crearTextField(15);
+        labelErrorApellido = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelCedula = CrearFormularios.crearEtiquetaDesdeCampo("Cédula");
+        fieldCedula = CrearFormularios.crearTextField(10);
+        labelErrorCedula = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelTelefono = CrearFormularios.crearEtiquetaDesdeCampo("Teléfono");
+        fieldTelefono = CrearFormularios.crearTextField(15);
+        labelErrorTelefono = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelFechaNacimiento = CrearFormularios.crearEtiquetaDesdeCampo("Fecha de nacimiento");
+        labelErrorFechaNacimiento = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelDia = CrearFormularios.crearEtiquetaDesdeCampo("Dia");
+        fieldDia = CrearFormularios.crearComboBox(60, 34, optionsDia);
+        labelErrorDia = CrearFormularios.crearEtiquetaErrDesdeCampo("");
+
+        labelMes = CrearFormularios.crearEtiquetaDesdeCampo("Mes");
+        fieldMes = CrearFormularios.crearComboBox(140, 34, optionsMes);
+        labelErrorMes = CrearFormularios.crearEtiquetaErrDesdeCampo("");
+
+        labelAño = CrearFormularios.crearEtiquetaDesdeCampo("Año");
+        fieldAño = CrearFormularios.crearComboBox(100, 34, optionsAño);
+        labelErrorAño = CrearFormularios.crearEtiquetaErrDesdeCampo("");
+
+        labelDireccion = CrearFormularios.crearEtiquetaDesdeCampo("Dirección");
+        fieldDireccion = CrearFormularios.crearTextField(21);
+        labelErrorDireccion = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelGenero = CrearFormularios.crearEtiquetaDesdeCampo("Género");
+        fieldGenero = CrearFormularios.crearComboBox(58, 34, optionsGenero);
+        labelErrorGenero = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        labelEspecialidad = CrearFormularios.crearEtiquetaDesdeCampo("Especialidad");
+        fieldEspecialidad = CrearFormularios.crearTextField(26);
+        labelErrorEspecialidad = CrearFormularios.crearEtiquetaErrDesdeCampo(" ");
+
+        JPanel panelUsuarioClave = CrearFormularios.crearPanelMultiCampo();
+        panelUsuarioClave.add(CrearFormularios.crearPanelCampo(labelUsuario, fieldUsuario, labelErrorUsuario));
         if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
-            System.out.println("...");
-            panelClave.setLayout(new BorderLayout());
-            labelClave = makeLabelForFormulario("Clave");
-            fieldClave = makePasswordFieldForFormulario(300, 25);
-            panelClave.add(labelClave, BorderLayout.NORTH);
-            panelClave.add(fieldClave, BorderLayout.SOUTH);
-            panelClave.setBackground(new Color(0, 0, 0, 0));
-            panelClave.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            panelUsuarioClave.add(CrearFormularios.crearPanelCampo(labelClave, fieldClave, labelErrorClave));
         }
 
-        JPanel panelCorreo = new JPanel();
-        panelCorreo.setLayout(new BorderLayout());
-        labelCorreo = makeLabelForFormulario("Correo");
-        fieldCorreo = makeTextFieldForFormulario(300, 25);
-        panelCorreo.add(labelCorreo, BorderLayout.NORTH);
-        panelCorreo.add(fieldCorreo, BorderLayout.SOUTH);
-        panelCorreo.setBackground(new Color(0, 0, 0, 0));
-        panelCorreo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        JPanel panelCorreoTipoSanguineo = CrearFormularios.crearPanelMultiCampo();
+        panelCorreoTipoSanguineo.add(CrearFormularios.crearPanelCampo(labelCorreo, fieldCorreo, labelErrorCorreo));
+        if (rol.equals(VariablesGlobales.ROL_PACIENTE)) {
+            panelCorreoTipoSanguineo.add(CrearFormularios.crearPanelCampo(labelTipoSanguineo, fieldTipoSanguineo, labelErrorTipoSanguineo));
+        }
 
-        JPanel panelCedulaTelefono = new JPanel();
-        panelCedulaTelefono.setLayout(new BoxLayout(panelCedulaTelefono, BoxLayout.X_AXIS));
+        JPanel panelNombreApellido = CrearFormularios.crearPanelMultiCampo();
+        panelNombreApellido.add(CrearFormularios.crearPanelCampo(labelNombre, fieldNombre, labelErrorNombre));
+        panelNombreApellido.add(CrearFormularios.crearPanelCampo(labelApellido, fieldApellido, labelErrorApellido));
 
-        JPanel panelCedula = new JPanel();
-        panelCedula.setLayout(new BorderLayout());
-        labelCedula = makeLabelForFormulario("Cedula");
-        fieldCedula = makeTextFieldForFormulario(120, 25);
-        panelCedula.add(labelCedula, BorderLayout.NORTH);
-        panelCedula.add(fieldCedula, BorderLayout.SOUTH);
-        panelCedula.setBackground(new Color(0, 0, 0, 0));
-        panelCedula.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        JPanel panelCedulaTelefono = CrearFormularios.crearPanelMultiCampo();
+        panelCedulaTelefono.add(CrearFormularios.crearPanelCampo(labelCedula, fieldCedula, labelErrorCedula));
+        panelCedulaTelefono.add(CrearFormularios.crearPanelCampo(labelTelefono, fieldTelefono, labelErrorTelefono));
 
-        JPanel panelTelefono = new JPanel();
-        panelTelefono.setLayout(new BorderLayout());
-        labelTelefono = makeLabelForFormulario("Telefono");
-        fieldTelefono = makeTextFieldForFormulario(180, 25);
-        panelTelefono.add(labelTelefono, BorderLayout.NORTH);
-        panelTelefono.add(fieldTelefono, BorderLayout.SOUTH);
-        panelTelefono.setBackground(new Color(0, 0, 0, 0));
-        panelTelefono.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        JPanel panelInternoFechaNacimiento = CrearFormularios.crearPanelMultiCampo();
+        panelInternoFechaNacimiento.add(CrearFormularios.crearPanelCampo(labelDia, fieldDia, labelErrorDia));
+        panelInternoFechaNacimiento.add(CrearFormularios.crearPanelCampo(labelMes, fieldMes, labelErrorMes));
+        panelInternoFechaNacimiento.add(CrearFormularios.crearPanelCampo(labelAño, fieldAño, labelErrorAño));
+        JPanel panelFechaNacimiento = CrearFormularios.crearPanelCampo(labelFechaNacimiento, panelInternoFechaNacimiento, labelErrorFechaNacimiento);
 
-        panelCedulaTelefono.add(panelCedula);
-        panelCedulaTelefono.add(panelTelefono);
-        panelCedulaTelefono.setBackground(new Color(0, 0, 0, 0));
-        panelCedulaTelefono.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        JPanel panelDireccionGenero = CrearFormularios.crearPanelMultiCampo();
+        panelDireccionGenero.add(CrearFormularios.crearPanelCampo(labelDireccion, fieldDireccion, labelErrorDireccion));
+        panelDireccionGenero.add(CrearFormularios.crearPanelCampo(labelGenero, fieldGenero, labelErrorGenero));
 
-        JPanel panelNombreApellido = new JPanel();
-        panelNombreApellido.setLayout(new BoxLayout(panelNombreApellido, BoxLayout.X_AXIS));
+        JPanel panelEspecialidad = CrearFormularios.crearPanelCampo(labelEspecialidad, fieldEspecialidad, labelErrorEspecialidad);
 
-        JPanel panelNombre = new JPanel();
-        panelNombre.setLayout(new BorderLayout());
-        labelNombre = makeLabelForFormulario("Nombre");
-        fieldNombre = makeTextFieldForFormulario(120, 25);
-        panelNombre.add(labelNombre, BorderLayout.NORTH);
-        panelNombre.add(fieldNombre, BorderLayout.SOUTH);
-        panelNombre.setBackground(new Color(0, 0, 0, 0));
-        panelNombre.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        panelDatos.add(panelUsuarioClave);
+        panelDatos.add(panelCorreoTipoSanguineo);
+        panelDatos.add(panelNombreApellido);
+        panelDatos.add(panelCedulaTelefono);
+        panelDatos.add(panelFechaNacimiento);
+        panelDatos.add(panelDireccionGenero);
+        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
+            panelDatos.add(panelEspecialidad);
+        }
+    }
 
-        JPanel panelApellido = new JPanel();
-        panelApellido.setLayout(new BorderLayout());
-        labelApellido = makeLabelForFormulario("Apellido");
-        fieldApellido = makeTextFieldForFormulario(180, 25);
-        panelApellido.add(labelApellido, BorderLayout.NORTH);
-        panelApellido.add(fieldApellido, BorderLayout.SOUTH);
-        panelApellido.setBackground(new Color(0, 0, 0, 0));
-        panelApellido.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        panelNombreApellido.add(panelNombre);
-        panelNombreApellido.add(panelApellido);
-        panelNombreApellido.setBackground(new Color(0, 0, 0, 0));
-        panelNombreApellido.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-
-        JPanel panelDireccionGenero = new JPanel();
-        panelDireccionGenero.setLayout(new BoxLayout(panelDireccionGenero, BoxLayout.X_AXIS));
-
-        JPanel panelDireccion = new JPanel();
-        panelDireccion.setLayout(new BorderLayout());
-        labelDireccion = makeLabelForFormulario("Direccion");
-        fieldDireccion = makeTextFieldForFormulario(250, 25);
-        panelDireccion.add(labelDireccion, BorderLayout.NORTH);
-        panelDireccion.add(fieldDireccion, BorderLayout.SOUTH);
-        panelDireccion.setBackground(new Color(0, 0, 0, 0));
-        panelDireccion.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        JPanel panelGenero = new JPanel();
-        panelGenero.setLayout(new BorderLayout());
-        labelGenero = makeLabelForFormulario("Genero");
-        String[] data = {"M", "F"};
-        fieldGenero = makeComboBoxForFormulario(50, 25, data);
-        panelGenero.add(labelGenero, BorderLayout.NORTH);
-        panelGenero.add(fieldGenero, BorderLayout.SOUTH);
-        panelGenero.setBackground(new Color(0, 0, 0, 0));
-        panelGenero.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        panelDireccionGenero.add(panelDireccion);
-        panelDireccionGenero.add(panelGenero);
-        panelDireccionGenero.setBackground(new Color(0, 0, 0, 0));
-        panelDireccionGenero.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-
-        JPanel panelFecha = new JPanel();
-        panelFecha.setLayout(new BoxLayout(panelFecha, BoxLayout.X_AXIS));
-
-        JPanel panelDia = new JPanel();
-        panelDia.setLayout(new BorderLayout());
-        labelDia = makeLabelForFormulario("Dia");
-        fieldDia = makeComboBoxForFormulario(50, 25, optionsDia);
-        panelDia.add(labelDia, BorderLayout.NORTH);
-        panelDia.add(fieldDia, BorderLayout.SOUTH);
-        panelDia.setBackground(new Color(0, 0, 0, 0));
-        panelDia.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        JPanel panelMes = new JPanel();
-        panelMes.setLayout(new BorderLayout());
-        labelMes = makeLabelForFormulario("Mes");
-        fieldMes = makeComboBoxForFormulario(150, 25, optionsMes);
-        panelMes.add(labelMes, BorderLayout.NORTH);
-        panelMes.add(fieldMes, BorderLayout.SOUTH);
-        panelMes.setBackground(new Color(0, 0, 0, 0));
-        panelMes.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        JPanel panelAño = new JPanel();
-        panelAño.setLayout(new BorderLayout());
-        labelAño = makeLabelForFormulario("Año");
-        fieldAño = makeComboBoxForFormulario(100, 25, optionsAño);
-        panelAño.add(labelAño, BorderLayout.NORTH);
-        panelAño.add(fieldAño, BorderLayout.SOUTH);
-        panelAño.setBackground(new Color(0, 0, 0, 0));
-        panelAño.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-
-        panelFecha.add(panelDia);
-        panelFecha.add(panelMes);
-        panelFecha.add(panelAño);
-        panelFecha.setBackground(new Color(0, 0, 0, 0));
-        panelFecha.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-
-        JPanel panelEspecialidad = new JPanel();
-        panelEspecialidad.setLayout(new BorderLayout());
-        labelEspecialidad = makeLabelForFormulario("Especialidad");
-        fieldEspecialidad = makeTextFieldForFormulario(300, 25);
-        panelEspecialidad.add(labelEspecialidad, BorderLayout.NORTH);
-        panelEspecialidad.add(fieldEspecialidad, BorderLayout.SOUTH);
-        panelEspecialidad.setBackground(new Color(0, 0, 0, 0));
-        panelEspecialidad.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    private void makePanelBotones() {
+        panelBotones = new JPanel();
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
+        panelBotones.setBackground(new Color(0, 0, 0, 0));
 
         JPanel panelButtonRegistrar = new JPanel();
         panelButtonRegistrar.setLayout(new FlowLayout());
+        panelButtonRegistrar.setBackground(new Color(0, 0, 0, 0));
         makeButtonRegistrar();
         panelButtonRegistrar.add(buttonRegistrar);
-        panelButtonRegistrar.setBackground(new Color(0, 0, 0, 0));
 
         JPanel panelLinkIniciarSesion = new JPanel();
         panelLinkIniciarSesion.setLayout(new FlowLayout());
+        panelLinkIniciarSesion.setBackground(Color.WHITE);
         makeLinkIniciarSesion();
         panelLinkIniciarSesion.add(linkIniciarSesion);
-        panelLinkIniciarSesion.setBackground(new Color(0, 0, 0, 0));
 
-        panelFormulario.add(panelTituloFormulario);
-        panelFormulario.add(panelUsuario);
-        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
-            panelFormulario.add(panelClave);
-        }
-        panelFormulario.add(panelCorreo);
-        panelFormulario.add(panelCedulaTelefono);
-        panelFormulario.add(panelNombreApellido);
-        panelFormulario.add(panelDireccionGenero);
-        panelFormulario.add(panelFecha);
-        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
-            panelFormulario.add(panelEspecialidad);
-        }
-        panelFormulario.add(panelButtonRegistrar);
-        panelFormulario.add(panelLinkIniciarSesion);
-    }
-
-    private JLabel makeLabelForFormulario(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Helvetica", Font.BOLD, 11));
-        label.setForeground(new Color(89, 103, 128));
-        return label;
-    }
-
-    private JTextField makeTextFieldForFormulario(int width, int height) {
-        JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(width, height));
-        textField.setMargin(new Insets(0, 10, 0, 10));
-        return textField;
-    }
-
-    private JPasswordField makePasswordFieldForFormulario(int width, int height) {
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(width, height));
-        passwordField.setMargin(new Insets(0, 10, 0, 10));
-        return passwordField;
-    }
-
-    private JComboBox<String> makeComboBoxForFormulario(int width, int height, String[] data) {
-        JComboBox<String> comboBox = new JComboBox<String>(data);
-        comboBox.setPreferredSize(new Dimension(width, height));
-        return comboBox;
+        panelBotones.add(panelButtonRegistrar);
+        panelBotones.add(panelLinkIniciarSesion);
     }
 
     private void makeButtonRegistrar() {
-        buttonRegistrar = new JButton("Registrar");
-        buttonRegistrar.setPreferredSize(new Dimension(100, 40));
-        buttonRegistrar.setBackground(new Color(0, 76, 153));
-        buttonRegistrar.setForeground(Color.WHITE);
-        buttonRegistrar.setFocusable(false);
-        buttonRegistrar.addActionListener(new RegistrarPersona(window, this));
+        buttonRegistrar = CrearFormularios.crearButton("Registrar", 160, 40, new RegistrarPersona(frmMain, this));
     }
 
     private void makeLinkIniciarSesion() {
-        linkIniciarSesion = new JButton("Iniciar Sesión");
-        linkIniciarSesion.setBackground(new Color(255, 255, 255, 0));
-        linkIniciarSesion.setForeground(new Color(0, 76, 153));
-        linkIniciarSesion.setFocusable(false);
-        linkIniciarSesion.setContentAreaFilled(false);
-        linkIniciarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        linkIniciarSesion.setBorder(BorderFactory.createEmptyBorder());
+        linkIniciarSesion = CrearFormularios.crearLink("Iniciar Sesión", new RedirigirAFrmLogin(frmMain, rol));
     }
 
-    private void makeLabelTituloFormulario() {
-        if (rol.equals(VariablesGlobales.ROL_PACIENTE)) {
-            labelTituloFormulario = new JLabel("REGISTRO PACIENTES");
-        } else {
-            labelTituloFormulario = new JLabel("REGISTRO MÉDICOS");
-        }
-        labelTituloFormulario.setFont(new Font("Helvetica", Font.BOLD, 24));
-        labelTituloFormulario.setForeground(new Color(0, 76, 153));
-    }
-
-    public Cuenta getCuenta() {
+    public Cuenta getCuenta() throws ModeloException {
         Cuenta cuenta = new Cuenta();
         cuenta.setUsuario(fieldUsuario.getText());
-        if (rol == VariablesGlobales.ROL_MEDICO) {
+        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
             cuenta.setClave(new String(fieldClave.getPassword()));
-            // falta limpiar las variables donde se guardo la clave.
         }
         return cuenta;
     }
 
-    public Persona getPersona() {
-        Persona persona = new Persona();
+    public Persona getPersona() throws ModeloException {
+        Persona persona;
         if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
             persona = new Medico();
+        } else {
+            persona = new Persona();
         }
 
-        persona.setCedula(fieldCedula.getText());
-        persona.setNombre(fieldNombre.getText());
-        persona.setApellido(fieldApellido.getText());
-        persona.setTelefono(fieldTelefono.getText());
-        persona.setCorreo(fieldCorreo.getText());
-        persona.setDireccion(fieldDireccion.getText());
-        persona.setGenero(fieldGenero.getSelectedItem().toString());
-        persona.setRol(VariablesGlobales.ROL_MEDICO);
-        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
-            Medico medico = (Medico) persona;
-            medico.setEspecialidad(fieldEspecialidad.getText());
+        persona.setRol(rol);
+
+        try {
+            persona.setCedula(fieldCedula.getText());
+            persona.setNombre(fieldNombre.getText());
+            persona.setApellido(fieldApellido.getText());
+            persona.setTelefono(fieldTelefono.getText());
+            persona.setCorreo(fieldCorreo.getText());
+            persona.setDireccion(fieldDireccion.getText());
+            persona.setGenero(fieldGenero.getSelectedItem().toString());
+
+            LocalDate fechaNacimiento = ExtractorDeDatosDeForms.getLocalDateFrom("Fecha de Nacimiento", fieldAño, fieldMes, fieldDia);
+            LocalDate fechaAhora = LocalDate.now();
+            persona.setEdad(UtilidadesTiempo.aniosTranscurridos(fechaNacimiento, fechaAhora));
+
+            if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
+                Medico medico = (Medico) persona;
+                medico.setEspecialidad(fieldEspecialidad.getText());
+            }
+        } catch (CampoNovalidoException e) {
+            throw new ModeloException(
+                    "El valor del campo " + e.getFieldName() + " es inválido",
+                    e,
+                    ErrorType.ErrorValorNoValido
+            );
         }
 
         return persona;
     }
 
-    public HistorialMedico getHistorialMedico() {
+    public HistorialMedico getHistorialMedico() throws ModeloException {
         HistorialMedico historialMedico = new HistorialMedico();
-        String año = fieldAño.getSelectedItem().toString();
 
-        String mes = fieldMes.getSelectedItem().toString();
-        mes = String.valueOf(UtilidadesTiempo.posicionMes(mes));
-        if (mes.length() == 1) {
-            mes = "0" + mes;
+        try {
+            LocalDate fechaNacimiento = ExtractorDeDatosDeForms.getLocalDateFrom("Fecha de Nacimiento", fieldAño, fieldMes, fieldDia);
+            historialMedico.setFechaNacimiento(fechaNacimiento.toString());
+
+            if (rol.equals(VariablesGlobales.ROL_PACIENTE)) {
+                String tipoSanguineoStr = fieldTipoSanguineo.getSelectedItem().toString();
+                TipoSanguineo tipoSanguineo = EncontrarTipoSanguineo.encontrar(tipoSanguineoStr);
+                historialMedico.setTipoSanguineo(tipoSanguineo);
+            }
+        } catch (CampoNovalidoException e) {
+            throw new ModeloException(
+                    "El valor del campo de " + e.getFieldName() + " es inválido",
+                    e,
+                    ErrorType.ErrorValorNoValido
+            );
         }
-
-        String dia = fieldDia.getSelectedItem().toString();
-        if (dia.length() == 1) {
-            dia = "0" + dia;
-        }
-
-        String fecha = año + "-" + mes + "-" + dia;
-        historialMedico.setFechaNacimiento(fecha);
         return historialMedico;
-    }
-
-    public void showDialog() {
-        JOptionPane.showMessageDialog(window, "Fallo el inicio de sesión", "Resultado del registro", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void showResultadoRegistro(boolean successful, String message) {
-        if (successful) {
-            JOptionPane.showMessageDialog(window, message, "Resultado del registro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(window, message, "Resultado del registro", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     public Rol getRol() {

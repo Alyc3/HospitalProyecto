@@ -6,9 +6,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Sirve para crear la configuración del panel lateral izquierdo generado por
+ * defecto
+ */
 public class PanelIzquierdoDefault extends JPanel {
 
-    private FrmMain fraMain;
+    private FrmMain frmMain;
 
     private JPanel panelMain;
     private JPanel panelHeader;
@@ -19,7 +23,8 @@ public class PanelIzquierdoDefault extends JPanel {
     private JButton buttonHome;
 
     public PanelIzquierdoDefault(FrmMain frmMain) {
-        this.fraMain = frmMain;
+        this.frmMain = frmMain;
+        setLayout(new FlowLayout());
         setBackground(new Color(38, 53, 72));
         makePanelMain();
         add(panelMain);
@@ -37,6 +42,7 @@ public class PanelIzquierdoDefault extends JPanel {
 
     private void makePanelHeader() {
         panelHeader = new JPanel();
+        panelHeader.setLayout(new FlowLayout());
         panelHeader.setBackground(new Color(0, 0, 0, 0));
         panelHeader.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         makeLabelBrand();
@@ -46,26 +52,25 @@ public class PanelIzquierdoDefault extends JPanel {
     private void makePanelMenu() {
         panelMenu = new JPanel();
         panelMenu.setLayout(new GridLayout(1, 1));
-        buttonHome = makeButtonForFormulario("Home", new RedirigirAFrmHome(fraMain));
-        buttonHome.setIcon(new ImageIcon("assets/img/home.png"));
+        buttonHome = makeButtonForMenu("Home", new RedirigirAFrmHome(frmMain));
         panelMenu.add(buttonHome);
-    }
-
-    private JButton makeButtonForFormulario(String name, ActionListener listener) {
-        JButton button = new JButton();
-        button = new JButton(name);
-        button.setBackground(new Color(38, 53, 72));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Helvetica", Font.BOLD, 20));
-        button.addActionListener(listener);
-        return button;
     }
 
     private void makeLabelBrand() {
         labelBrand = new JLabel("HOSPITAL");
-        labelBrand.setFont(new Font("Helvetica", Font.BOLD, 32));
+        labelBrand.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 32));
         labelBrand.setForeground(Color.WHITE);
         labelBrand.setIcon(new ImageIcon("assets/img/hospital.png"));
+    }
+
+    private JButton makeButtonForMenu(String name, ActionListener listener) {
+        JButton button = new JButton(name);
+        button.setBackground(new Color(38, 53, 72));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.addActionListener(listener);
+        return button;
     }
 }

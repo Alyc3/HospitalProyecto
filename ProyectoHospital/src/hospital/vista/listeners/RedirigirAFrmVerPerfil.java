@@ -6,19 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Listern utilizado para redirigir al usuario hacia el frame del signup
+ * Listener utilizado para Redirigir al usuario hacia el Frame para ver su
+ * perfil
  */
-public class RedirigirAFrmSignup implements ActionListener {
+public class RedirigirAFrmVerPerfil implements ActionListener {
 
     private FrmMain frmMain;
     private Rol rol;
 
-    public RedirigirAFrmSignup(FrmMain mainWindow, Rol rol) {
-        this.frmMain = mainWindow;
+    public RedirigirAFrmVerPerfil(FrmMain frmMain, Rol rol) {
+        this.frmMain = frmMain;
         this.rol = rol;
     }
 
     public void actionPerformed(ActionEvent e) {
-        frmMain.loadFrmSignup(rol);
+        frmMain.loadFrmVerPerfil(rol);
     }
 }

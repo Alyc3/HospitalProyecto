@@ -1,12 +1,14 @@
 package hospital.vista;
 
 import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioSignup;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.modelo.global.VariablesGlobales;
+import hospital.vista.paneles.PanelFormularioVerPerfil;
+import hospital.vista.paneles.PanelIzquierdoMedico;
+import hospital.vista.paneles.PanelIzquierdoPaciente;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmSignup {
+public class FrmVerPerfil {
 
     private FrmMain frmMain;
 
@@ -15,15 +17,16 @@ public class FrmSignup {
     private JPanel panelMain;
     private JPanel panelLeft;
     private JPanel panelBody;
-    private JPanel panelFormularioSignup;
+    private JPanel panelFormularioVerPerfil;
 
-    public FrmSignup(FrmMain frmMain) {
+    public FrmVerPerfil(FrmMain frmMain) {
         this.frmMain = frmMain;
     }
 
     /**
      * Inicializa los componentes de la vista y muestra los mismos en la ventana
-     * Obtiene el rol para dterminar para que tipo de usuario será el Signup
+     * Identificando para que tipo de usuario se va a editar el perfil, de
+     * acuerdo a su rol
      *
      * @param rol
      */
@@ -51,27 +54,32 @@ public class FrmSignup {
     }
 
     /**
-     * Crea el panel lateral izquierdo por defecto
+     * Crea el panel lateral izquierdo con todos sus componentes
      */
     private void makePanelLeft() {
-        panelLeft = new PanelIzquierdoDefault(frmMain);
+        if (rol.equals(VariablesGlobales.ROL_MEDICO)) {
+            panelLeft = new PanelIzquierdoMedico(frmMain);
+        } else {
+            panelLeft = new PanelIzquierdoPaciente(frmMain);
+        }
     }
 
     /**
-     * Crea el panel principal con todos sus componentes
+     * Crear el panel principal con cada uno de sus componentes
      */
     private void makePanelBody() {
         panelBody = new JPanel();
         panelBody.setLayout(new GridBagLayout());
-        panelBody.setBackground(new Color(238, 242, 245));
-        makePanelFormularioSignup();
-        panelBody.add(panelFormularioSignup);
+        panelBody.setBackground(new Color(214, 234, 248));
+
+        makePanelFormularioVerPerfil();
+        panelBody.add(panelFormularioVerPerfil);
     }
 
     /**
-     * Crea el panel del formulario con sus subcomponentes
+     * Crea el panel del formulario con sus componentes
      */
-    private void makePanelFormularioSignup() {
-        panelFormularioSignup = new PanelFormularioSignup(frmMain, rol);
+    private void makePanelFormularioVerPerfil() {
+        panelFormularioVerPerfil = new PanelFormularioVerPerfil(frmMain, rol);
     }
 }

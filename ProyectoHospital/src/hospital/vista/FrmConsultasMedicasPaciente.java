@@ -1,35 +1,29 @@
 package hospital.vista;
 
-import hospital.modelo.Rol;
-import hospital.vista.paneles.PanelFormularioLogin;
-import hospital.vista.paneles.PanelIzquierdoDefault;
+import hospital.vista.paneles.PanelConsultasMedicas;
+import hospital.vista.paneles.PanelIzquierdoPaciente;
 import java.awt.*;
 import javax.swing.*;
 
-public class FrmLogin {
+public class FrmConsultasMedicasPaciente {
 
     private FrmMain frmMain;
-
-    private Rol rol;
 
     private JPanel panelMain;
     private JPanel panelIzquierdo;
     private JPanel panelCuerpo;
-    private JPanel panelFormularioLogin;
+    private JPanel panelConsultasMedicas;
 
-    public FrmLogin(FrmMain window) {
-        this.frmMain = window;
+    public FrmConsultasMedicasPaciente(FrmMain frmMain) {
+        this.frmMain = frmMain;
     }
 
     /**
      * Inicializa los componentes de la vista y muestra los mismos en la ventana
-     * Obtiene el rol para identificar para que tipo de usuario será el login
      *
-     * @param rol
      */
-    public void mostrar(Rol rol) {
+    public void mostrar() {
         frmMain.removeAll();
-        this.rol = rol;
         Container cp = frmMain.getContentPane();
         cp.setLayout(new BorderLayout());
         makePanelMain();
@@ -51,28 +45,37 @@ public class FrmLogin {
     }
 
     /**
-     * Crea el panel lateral izquierdo por defecto
+     * Crea el panel lateral izquierdo generado para pacientes
      */
     private void makePanelLeft() {
-        panelIzquierdo = new PanelIzquierdoDefault(frmMain);
+        panelIzquierdo = new PanelIzquierdoPaciente(frmMain);
     }
 
     /**
-     * Crea el panel del cuerpo de la vista con todos sus subcomponentes
+     * Crea el panel del cuerpo de la vista
      */
     private void makePanelBody() {
         panelCuerpo = new JPanel();
         panelCuerpo.setLayout(new GridBagLayout());
         panelCuerpo.setBackground(new Color(214, 234, 248));
-        makePanelFormularioLogin();
-        panelCuerpo.add(panelFormularioLogin);
+
+        makePanelConsultasMedicas();
+
+        panelCuerpo.add(panelConsultasMedicas);
     }
 
     /**
-     * Crear el panel contenedor del formulario con todos los componentes del
-     * mismo
+     * Crea el panel para consultas medicas con todos sus subcomponentes
      */
-    private void makePanelFormularioLogin() {
-        panelFormularioLogin = new PanelFormularioLogin(frmMain, rol);
+    private void makePanelConsultasMedicas() {
+        panelConsultasMedicas = new PanelConsultasMedicas(frmMain);
+
+    }
+
+    /**
+     * Recarga la vista
+     */
+    public void reload() {
+        mostrar();
     }
 }

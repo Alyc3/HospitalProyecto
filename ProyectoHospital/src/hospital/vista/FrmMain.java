@@ -4,16 +4,20 @@ import hospital.modelo.Rol;
 import java.awt.Container;
 import javax.swing.*;
 
+/**
+ * Frame principal del sistema desde donde se cargarán todas las demás vistas
+ * para que puedan ser usadas
+ */
 public class FrmMain extends JFrame {
 
     private FrmHome frmHome;
     private FrmLogin frmLogin;
     private FrmSignup frmSignup;
-    private FrmPerfilPacienteVistaPaciente frmPerfilPacienteVistaPaciente;
-    private FrmHistorialMedicoVistaPaciente frmHistorialMedicoVistaPaciente;
-    private FrmConsultasMedicasVistaPaciente frmConsultasMedicasVistaPaciente;
-    private FrmPerfilMedicoVistaMedico frmPerfilMedicoVistaMedico;
+    private FrmConsultasMedicasPaciente frmConsultasMedicasPaciente;
     private FrmPacientesPendientes frmPacientesPendientes;
+    private FrmConsultaMedica frmConsultaMedica;
+    private FrmHistorialMedico frmHistorialMedico;
+    private FrmVerPerfil frmVerPerfil;
 
     public FrmMain() {
         super("Administracion Hospital");
@@ -21,13 +25,13 @@ public class FrmMain extends JFrame {
         frmHome = new FrmHome(this);
         frmLogin = new FrmLogin(this);
         frmSignup = new FrmSignup(this);
-        frmPerfilPacienteVistaPaciente = new FrmPerfilPacienteVistaPaciente(this);
-        frmHistorialMedicoVistaPaciente = new FrmHistorialMedicoVistaPaciente(this);
-        frmConsultasMedicasVistaPaciente = new FrmConsultasMedicasVistaPaciente(this);
-        frmPerfilMedicoVistaMedico = new FrmPerfilMedicoVistaMedico(this);
+        frmVerPerfil = new FrmVerPerfil(this);
+        frmHistorialMedico = new FrmHistorialMedico(this);
+        frmConsultasMedicasPaciente = new FrmConsultasMedicasPaciente(this);
         frmPacientesPendientes = new FrmPacientesPendientes(this);
+        frmConsultaMedica = new FrmConsultaMedica(this);
 
-        setSize(1200, 600);
+        setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(this);
@@ -45,35 +49,35 @@ public class FrmMain extends JFrame {
         cp.repaint();
     }
 
-    public void loadHomeView() {
+    public void loadFrmHome() {
         frmHome.mostrar();
     }
 
-    public void loadLoginView(Rol rol) {
-        frmLogin.show(rol);
+    public void loadFrmLogin(Rol rol) {
+        frmLogin.mostrar(rol);
     }
 
-    public void loadSignupView(Rol rol) {
+    public void loadFrmSignup(Rol rol) {
         frmSignup.mostrar(rol);
     }
 
-    public void loadConsultasMedicasPacienteView() {
-        frmConsultasMedicasVistaPaciente.mostrar();
+    public void loadFrmVerPerfil(Rol rol) {
+        frmVerPerfil.mostrar(rol);
     }
 
-    public void loadPerfilPacientePacienteView() {
-        frmPerfilPacienteVistaPaciente.mostrar();
+    public void loalFrmConsultasMedicasPaciente() {
+        frmConsultasMedicasPaciente.mostrar();
     }
 
-    public void loadHistorialMedicoPacienteView() {
-        frmHistorialMedicoVistaPaciente.mostrar();
+    public void loalFrmHistorialMedico(Rol rol, Integer idPaciente) {
+        frmHistorialMedico.mostrar(rol, idPaciente);
     }
 
-    public void loadPerfilMedicoMedicoView() {
-        frmPerfilMedicoVistaMedico.mostrar();
+    public void loadFrmPacientesPendientes() {
+        frmPacientesPendientes.mostrar();
     }
 
-    public void loadPacientesPendientesView() {
-        frmPacientesPendientes.show();
+    public void loadFrmConsultaMedica(Rol rol, Integer idPaciente, Integer idConsultaMedica) {
+        frmConsultaMedica.mostrar(rol, idPaciente, idConsultaMedica);
     }
 }
